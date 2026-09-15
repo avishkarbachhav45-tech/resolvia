@@ -675,13 +675,101 @@ function Tickets() {
   );
 }
 
+function TicketDetails() {
+  const ticket = {
+    id: 1,
+    title: "Printer not working",
+    description: "Printer is not responding to print requests.",
+    customer: "Rahul",
+    category: "Hardware",
+    priority: "high",
+    status: "open",
+  };
+
+  return (
+    <div className="flex min-h-screen">
+      <Sidebar />
+
+      <main className="min-w-0 flex-1 bg-slate-50 p-8">
+        <div className="mb-8">
+          <NavLink
+            to="/tickets"
+            className="text-sm font-medium text-slate-500 hover:text-slate-900"
+          >
+            ← Back to Tickets
+          </NavLink>
+
+          <p className="mt-6 text-sm font-medium text-slate-500">
+            Ticket #{ticket.id}
+          </p>
+
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
+            {ticket.title}
+          </h1>
+
+          <p className="mt-2 text-slate-500">
+            View and manage ticket details.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="flex items-start justify-between gap-6">
+            <div>
+              <p className="text-sm font-medium text-slate-500">
+                Description
+              </p>
+
+              <p className="mt-2 leading-7 text-slate-700">
+                {ticket.description}
+              </p>
+            </div>
+
+            <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold capitalize text-red-700">
+              {ticket.priority}
+            </span>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-6 border-t border-slate-100 pt-6 sm:grid-cols-3">
+            <div>
+              <p className="text-xs font-medium text-slate-400">
+                Customer
+              </p>
+              <p className="mt-1 font-medium text-slate-800">
+                {ticket.customer}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs font-medium text-slate-400">
+                Category
+              </p>
+              <p className="mt-1 font-medium capitalize text-slate-800">
+                {ticket.category}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs font-medium text-slate-400">
+                Status
+              </p>
+              <p className="mt-1 font-medium capitalize text-slate-800">
+                {ticket.status}
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/tickets" element={<Tickets />} />
       <Route path="/tickets/new" element={<h1>Create Ticket</h1>} />
-      <Route path="/tickets/:id" element={<h1>Ticket Details</h1>} />
+      <Route path="/tickets/:id" element={<TicketDetails />} />
     </Routes>
   );
 }
