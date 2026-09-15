@@ -1,16 +1,76 @@
-# React + Vite
+# Resolvia — Technical Support & Ticket Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Resolvia is a responsive technical support and ticket management system built with React.js.
 
-Currently, two official plugins are available:
+It allows users to create, track, search, filter and manage customer support tickets.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Create support tickets
+- View ticket details
+- Update ticket status and priority
+- Add resolution notes
+- Search tickets
+- Filter by status and priority
+- Dashboard ticket statistics
+- Responsive UI
+- REST API integration
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the Oxlint configuration
+- React.js
+- JavaScript
+- Tailwind CSS
+- React Router
+- REST API
+- JSON Server
+- Git & GitHub
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## REST API
+
+Currently uses JSON Server as a local REST API.
+
+### Endpoints
+
+- GET /tickets
+- GET /tickets/:id
+- POST /tickets
+- PATCH /tickets/:id
+
+## Getting Started
+
+### Install dependencies
+
+npm install
+
+### Start the REST API
+
+npx json-server db.json --port 3001
+
+### Start the React application
+
+npm run dev
+
+Application:
+http://localhost:5173
+
+API:
+http://localhost:3001
+
+## Project Structure
+
+src/
+├── services/
+│   └── ticketService.js
+├── App.jsx
+├── App.css
+├── index.css
+└── main.jsx
+
+db.json
+
+## Current Status
+
+Core ticket management functionality and REST API integration are implemented.
+
+The project is actively being enhanced with additional features and UI improvements.
