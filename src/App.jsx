@@ -7,7 +7,7 @@ function Header() {
   return(
     <header className="mb-10">
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
         <div>
           <p className="text-sm font-medium text-slate-500 mb-2">
@@ -159,7 +159,7 @@ function Layout({ children }) {
 
 function Sidebar() {
   return (
-    <aside className="w-64 min-h-screen bg-slate-950 p-6 text-white sm:w-64">
+    <aside className="w-full shrink-0 bg-slate-950 p-4 text-white sm:min-h-screen sm:w-64 sm:p-6">
       <h1 className="text-2xl font-bold tracking-tight">
         Resolvia
       </h1>
@@ -168,14 +168,14 @@ function Sidebar() {
         Support Console
       </p>
 
-      <nav className="mt-10 space-y-2">
+      <nav className="mt-6 flex gap-2 overflow-x-auto sm:mt-10 sm:block sm:space-y-2">
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `block rounded-xl px-4 py-3 font-medium ${
+            `block shrink-0 whitespace-nowrap rounded-xl px-4 py-3 font-medium ${
               isActive
-                ? "bg-white/10 text-white"
-                : "text-slate-400 hover:bg-white/5 hover:text-white"
+                ? "block shrink-0 whitespace-nowrap rounded-xl px-4 py-3 font-medium"
+                : "block shrink-0 whitespace-nowrap rounded-xl px-4 py-3 font-medium"
             }`
           }
         >
@@ -249,7 +249,7 @@ function Dashboard() {
 
   return(
 
-    <div className="app flex min-h-screen">
+    <div className="app flex min-h-screen flex-col sm:flex-row">
 
       <Sidebar />
 
@@ -415,7 +415,7 @@ function Tickets() {
   });
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col sm:flex-row">
       <Sidebar />
 
       <main className="min-w-0 flex-1 bg-slate-50 p-4 sm:p-6 lg:p-8">
@@ -425,7 +425,7 @@ function Tickets() {
             Support management
           </p>
 
-          <div className="mt-1 flex items-center justify-between">
+          <div className="mt-1 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
                 Tickets
@@ -666,7 +666,7 @@ function TicketDetails() {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col sm:flex-row">
       <Sidebar />
 
       <main className="min-w-0 flex-1 bg-slate-50 p-4 sm:p-6 lg:p-8">
@@ -827,7 +827,7 @@ function CreateTicket() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col sm:flex-row">
       <Sidebar />
 
       <main className="min-w-0 flex-1 bg-slate-50 p-4 sm:p-6 lg:p-8">

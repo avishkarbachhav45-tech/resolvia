@@ -17,8 +17,8 @@
       "customer": "Amit",
       "category": "Account",
       "priority": "critical",
-      "status": "open",
-      "resolutionNotes": ""
+      "status": "resolved",
+      "resolutionNotes": "Issue resolved successfully."
     },
     {
       "id": "3",
@@ -39,6 +39,16 @@
       "status": "open",
       "resolutionNotes": "",
       "id": "mU90pRpM1Dk"
+    },
+    {
+      "title": "VPN connection issue",
+      "description": "Unable to connect to company VPN",
+      "customer": "Sham",
+      "category": "network",
+      "priority": "medium",
+      "status": "open",
+      "resolutionNotes": "",
+      "id": "ZzikVsjn6fg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
