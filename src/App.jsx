@@ -210,43 +210,25 @@ function Sidebar() {
 }
 
 function Dashboard() {
+  const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const [tickets, setTickets] = useState ([
-    {
-      title: "Printer not working",
-      description: "Printer not working properly",
-      customer: "Rahul",
-      category: "hardware",
-      priority: "high",
-      status: "open"
-    },
-    {
-      title: "Unable to login",
-      description: "Unable to login and access",
-      customer: "Amit",
-      category: "account",
-      priority: "critical",
-      status: "open"
-    },
-    {
-      title: "Network connection issue",
-      description: "Network connection issue occurred",
-      customer: "Priya",
-      category: "network",
-      priority: "medium",
-      status: "resolved"
-    }
-  ]);
+  useEffect(() => {
+    const loadTickets = async () => {
+      try {
+        const data = await getTickets();
+        setTickets(data);
+      } catch (error) {
+        console.error("Failed to load dashboard tickets:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTickets();
+  }, []);
 
   const [selectedTicket, setSelectedTicket] = useState(null);
-
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    customer: "",
-    category: "other",
-    priority: "low"
-  });
 
   const totalTickets = tickets.length;
 
@@ -261,29 +243,6 @@ function Dashboard() {
   const resolvedTickets = tickets.filter(
     (ticket) => ticket.status === "resolved"
   ).length;
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const newTicket = {
-      title: formData.title,
-      description: formData.description,
-      customer: formData.customer,
-      category: formData.category,
-      priority: formData.priority,
-      status: "open"
-    };
-
-    setTickets([...tickets, newTicket]);
-
-    setFormData({
-      title: "",
-      description: "",
-      customer: "",
-      category: "other",
-      priority: "low"
-    });
-  };
 
   return(
 
@@ -333,6 +292,12 @@ function Dashboard() {
             {tickets.length} tickets
           </span>
         </div>
+
+        {loading && (
+          <p className="text-sm text-slate-500">
+            Loading tickets...
+          </p>
+        )}
 
         <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
 
