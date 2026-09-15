@@ -23,9 +23,12 @@ function Header() {
           </p>
         </div>
 
-        <button className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-slate-800">
+        <NavLink
+          to="/tickets/new"
+          className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+        >
           + Create Ticket
-        </button>
+        </NavLink>
 
       </div>
 
@@ -156,7 +159,7 @@ function Layout({ children }) {
 
 function Sidebar() {
   return (
-    <aside className="w-64 min-h-screen bg-slate-950 p-6 text-white">
+    <aside className="w-64 min-h-screen bg-slate-950 p-6 text-white sm:w-64">
       <h1 className="text-2xl font-bold tracking-tight">
         Resolvia
       </h1>
@@ -250,7 +253,7 @@ function Dashboard() {
 
       <Sidebar />
 
-      <main className="main-content flex-1 bg-slate-50 p-8">
+      <main className="main-content min-w-0 flex-1 bg-slate-50 p-4 sm:p-6 lg:p-8">
 
         <Header />
 
@@ -415,7 +418,7 @@ function Tickets() {
     <div className="flex min-h-screen">
       <Sidebar />
 
-      <main className="min-w-0 flex-1 bg-slate-50 p-8">
+      <main className="min-w-0 flex-1 bg-slate-50 p-4 sm:p-6 lg:p-8">
         {/* Header */}
         <div className="mb-8">
           <p className="text-sm font-medium text-slate-500">
@@ -666,7 +669,7 @@ function TicketDetails() {
     <div className="flex min-h-screen">
       <Sidebar />
 
-      <main className="min-w-0 flex-1 bg-slate-50 p-8">
+      <main className="min-w-0 flex-1 bg-slate-50 p-4 sm:p-6 lg:p-8">
         <div className="mb-8">
           <NavLink
             to="/tickets"
@@ -827,7 +830,7 @@ function CreateTicket() {
     <div className="flex min-h-screen">
       <Sidebar />
 
-      <main className="min-w-0 flex-1 bg-slate-50 p-8">
+      <main className="min-w-0 flex-1 bg-slate-50 p-4 sm:p-6 lg:p-8">
         <div className="mb-8">
           <NavLink
             to="/tickets"
