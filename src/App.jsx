@@ -592,27 +592,37 @@ function Tickets() {
 function CustomSelect({ value, options, onChange }) {
   const [open, setOpen] = useState(false);
 
+  const selectedOption = options.find(
+    (option) => option.value === value
+  );
+
   return (
     <div className="relative w-40">
+
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
+        className={`flex w-full items-center justify-between rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white shadow-sm transition-all duration-200 ${
+          open
+            ? "rounded-b-lg bg-slate-800"
+            : "hover:bg-slate-800"
+        }`}
       >
-        {options.find((option) => option.value === value)?.label}
+        <span>{selectedOption?.label}</span>
 
         <span
-          className={`transition-transform ${
+          className={`text-xs transition-transform duration-300 ${
             open ? "rotate-180" : ""
           }`}
         >
-          ↓
+          ▼
         </span>
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-full rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
-          {options.map((option) => (
+        <div className="absolute left-0 top-full z-50 mt-2 w-full overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
+
+          {options.map((option, index) => (
             <button
               key={option.value}
               type="button"
@@ -620,15 +630,19 @@ function CustomSelect({ value, options, onChange }) {
                 onChange(option.value);
                 setOpen(false);
               }}
-              className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition ${
+              style={{
+                animationDelay: `${index * 45}ms`,
+              }}
+              className={`dropdown-option block w-full rounded-lg px-3 py-2.5 text-left text-sm transition-all duration-150 ${
                 value === option.value
-                  ? "bg-slate-100 font-semibold text-slate-900"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                  ? "bg-slate-900 font-semibold text-white"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
               {option.label}
             </button>
           ))}
+
         </div>
       )}
     </div>
@@ -638,6 +652,7 @@ function CustomSelect({ value, options, onChange }) {
 function TicketDetails() {
   const [status, setStatus] = useState("open");
   const [priority, setPriority] = useState("high");
+  const [resolutionNotes, setResolutionNotes] = useState("");
 
   const ticket = {
     id: 1,
@@ -735,20 +750,39 @@ function TicketDetails() {
             </div>
           </div>
 
-          <div className="mt-8 flex justify-end border-t border-slate-100 pt-6">
-            <button
-              type="button"
-              onClick={() => {
-                console.log("Updated Ticket:", {
-                  ...ticket,
-                  status,
-                  priority,
-                });
-              }}
-              className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
-            >
-              Update Ticket
-            </button>
+          <div className="mt-8 border-t border-slate-100 pt-6">
+
+            <div>
+              <label className="text-sm font-semibold text-slate-700">
+                Resolution Notes
+              </label>
+
+              <textarea
+                rows="5"
+                value={resolutionNotes}
+                onChange={(event) => setResolutionNotes(event.target.value)}
+                placeholder="Add notes about how this issue was resolved..."
+                className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-400"
+              />
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  console.log("Updated Ticket:", {
+                    ...ticket,
+                    status,
+                    priority,
+                    resolutionNotes,
+                  });
+                }}
+                className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+              >
+                Update Ticket
+              </button>
+            </div>
+
           </div>
 
         </div>
