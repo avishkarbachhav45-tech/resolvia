@@ -59,6 +59,7 @@ http://localhost:3001
 
 ## Project Structure
 
+```text
 src/
 ├── services/
 │   └── ticketService.js
@@ -68,6 +69,7 @@ src/
 └── main.jsx
 
 db.json
+```
 
 ## Current Status
 
