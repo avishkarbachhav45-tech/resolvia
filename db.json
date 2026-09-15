@@ -1,0 +1,45 @@
+{
+  "tickets": [
+    {
+      "id": "1",
+      "title": "Printer not working",
+      "description": "Printer is not responding to print requests.",
+      "customer": "Rahul",
+      "category": "Hardware",
+      "priority": "critical",
+      "status": "resolved",
+      "resolutionNotes": "Printer issue resolved after reinstalling driver."
+    },
+    {
+      "id": "2",
+      "title": "Unable to login",
+      "description": "User cannot access the support portal.",
+      "customer": "Amit",
+      "category": "Account",
+      "priority": "critical",
+      "status": "open",
+      "resolutionNotes": ""
+    },
+    {
+      "id": "3",
+      "title": "Network connection issue",
+      "description": "Internet connection keeps disconnecting.",
+      "customer": "Priya",
+      "category": "Network",
+      "priority": "medium",
+      "status": "resolved",
+      "resolutionNotes": "Network configuration was reset successfully."
+    },
+    {
+      "title": "Laptop overheating",
+      "description": "Laptop becomes very hot during normal usage",
+      "customer": "Avishkar",
+      "category": "hardware",
+      "priority": "high",
+      "status": "open",
+      "resolutionNotes": "",
+      "id": "mU90pRpM1Dk"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

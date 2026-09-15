@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Routes, Route, NavLink, useNavigate, useParams} from "react-router-dom";
+import { getTickets, createTicket, getTicketById, updateTicket} from "./services/ticketService";
 import "./App.css";
 
 function Header() {
@@ -411,35 +412,25 @@ function Tickets() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
 
-  const tickets = [
-    {
-      id: 1,
-      title: "Printer not working",
-      description: "Printer is not responding to print requests.",
-      customer: "Rahul",
-      category: "Hardware",
-      priority: "high",
-      status: "open",
-    },
-    {
-      id: 2,
-      title: "Unable to login",
-      description: "User cannot access the support portal.",
-      customer: "Amit",
-      category: "Account",
-      priority: "critical",
-      status: "open",
-    },
-    {
-      id: 3,
-      title: "Network connection issue",
-      description: "Internet connection keeps disconnecting.",
-      customer: "Priya",
-      category: "Network",
-      priority: "medium",
-      status: "resolved",
-    },
-  ];
+  const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+
+  useEffect(() => {
+    const loadTickets = async () => {
+      try {
+        const data = await getTickets();
+        setTickets(data);
+      } catch (error) {
+        setError("Unable to load tickets.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTickets();
+  }, []);
 
   const filteredTickets = tickets.filter((ticket) => {
     const matchesSearch =
@@ -532,6 +523,18 @@ function Tickets() {
             {filteredTickets.length} tickets
           </span>
         </div>
+
+        {loading && (
+          <p className="mb-4 text-sm text-slate-500">
+            Loading tickets...
+          </p>
+        )}
+
+        {error && (
+          <p className="mb-4 text-sm font-medium text-red-600">
+            {error}
+          </p>
+        )}
 
         {/* Tickets */}
         <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
@@ -650,19 +653,49 @@ function CustomSelect({ value, options, onChange }) {
 }
 
 function TicketDetails() {
-  const [status, setStatus] = useState("open");
-  const [priority, setPriority] = useState("high");
-  const [resolutionNotes, setResolutionNotes] = useState("");
+  const { id } = useParams();
 
-  const ticket = {
-    id: 1,
-    title: "Printer not working",
-    description: "Printer is not responding to print requests.",
-    customer: "Rahul",
-    category: "Hardware",
-    priority: "high",
-    status: "open",
-  };
+  const [ticket, setTicket] = useState(null);
+  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
+  const [resolutionNotes, setResolutionNotes] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const loadTicket = async () => {
+      try {
+        const data = await getTicketById(id);
+
+        setTicket(data);
+        setStatus(data.status);
+        setPriority(data.priority);
+        setResolutionNotes(data.resolutionNotes || "");
+      } catch (error) {
+        setError("Unable to load ticket.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTicket();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="p-8 text-slate-500">
+        Loading ticket...
+      </div>
+    );
+  }
+
+  if (error || !ticket) {
+    return (
+      <div className="p-8 text-red-600">
+        {error || "Ticket not found."}
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen">
@@ -769,13 +802,20 @@ function TicketDetails() {
             <div className="mt-4 flex justify-end">
               <button
                 type="button"
-                onClick={() => {
-                  console.log("Updated Ticket:", {
-                    ...ticket,
-                    status,
-                    priority,
-                    resolutionNotes,
-                  });
+                onClick={async () => {
+                  try {
+                    const updatedTicket = await updateTicket(ticket.id, {
+                      status,
+                      priority,
+                      resolutionNotes,
+                    });
+
+                    setTicket(updatedTicket);
+
+                    console.log("Ticket updated successfully:", updatedTicket);
+                  } catch (error) {
+                    console.error("Failed to update ticket:", error);
+                  }
                 }}
                 className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
               >
@@ -792,6 +832,8 @@ function TicketDetails() {
 }
 
 function CreateTicket() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -800,10 +842,20 @@ function CreateTicket() {
     priority: "low",
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("New Ticket:", formData);
+    try {
+      await createTicket({
+        ...formData,
+        status: "open",
+        resolutionNotes: "",
+      });
+
+      navigate("/tickets");
+    } catch (error) {
+      console.error("Failed to create ticket:", error);
+    }
   };
 
   return (
