@@ -400,92 +400,6 @@ function Dashboard() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-
-          <label>
-            Title
-            <input
-              type="text"
-              value={formData.title}
-              onChange={(event) =>
-                setFormData({
-                  ...formData,
-                  title: event.target.value
-                })
-              }
-            />
-          </label>
-          <label>
-            Description
-            <textarea
-              value={formData.description}
-              onChange={(event) =>
-                setFormData({
-                  ...formData,
-                  description: event.target.value
-                })
-              }
-            />
-          </label>
-
-        <label>
-          Customer
-          <input
-            type="text"
-            value={formData.customer}
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                customer: event.target.value
-              })
-            }
-          />
-        </label>
-          <label>
-            Category
-            <select
-              value={formData.category}
-              onChange={(event) =>
-                setFormData({
-                  ...formData,
-                  category: event.target.value
-                })
-              }
-            >
-              <option value="hardware">Hardware</option>
-              <option value="software">Software</option>
-              <option value="network">Network</option>
-              <option value="account">Account</option>
-              <option value="other">Other</option>
-            </select>
-
-          </label>
-
-          <label>
-            Priority
-          <select
-            value={formData.priority}
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                priority: event.target.value
-              })
-            }
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-            <option value="critical">Critical</option>
-          </select>
-
-          </label>
-
-          <button type="submit">
-            Create Ticket
-          </button>
-
-        </form>
-
       </main>
 
     </div>
@@ -763,12 +677,173 @@ function TicketDetails() {
   );
 }
 
+function CreateTicket() {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    customer: "",
+    category: "other",
+    priority: "low",
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log("New Ticket:", formData);
+  };
+
+  return (
+    <div className="flex min-h-screen">
+      <Sidebar />
+
+      <main className="min-w-0 flex-1 bg-slate-50 p-8">
+        <div className="mb-8">
+          <NavLink
+            to="/tickets"
+            className="text-sm font-medium text-slate-500 hover:text-slate-900"
+          >
+            ← Back to Tickets
+          </NavLink>
+
+          <h1 className="mt-6 text-3xl font-bold tracking-tight text-slate-900">
+            Create Ticket
+          </h1>
+
+          <p className="mt-2 text-slate-500">
+            Create a new technical support request.
+          </p>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-3xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+        >
+          <div className="grid grid-cols-1 gap-6">
+            <div>
+              <label className="text-sm font-semibold text-slate-700">
+                Ticket Title
+              </label>
+
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(event) =>
+                  setFormData({
+                    ...formData,
+                    title: event.target.value,
+                  })
+                }
+                placeholder="e.g. Printer not working"
+                className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-400"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-semibold text-slate-700">
+                Customer
+              </label>
+
+              <input
+                type="text"
+                value={formData.customer}
+                onChange={(event) =>
+                  setFormData({
+                    ...formData,
+                    customer: event.target.value,
+                  })
+                }
+                placeholder="Customer name"
+                className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-400"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-semibold text-slate-700">
+                Description
+              </label>
+
+              <textarea
+                rows="5"
+                value={formData.description}
+                onChange={(event) =>
+                  setFormData({
+                    ...formData,
+                    description: event.target.value,
+                  })
+                }
+                placeholder="Describe the issue..."
+                className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-400"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <label className="text-sm font-semibold text-slate-700">
+                  Category
+                </label>
+
+                <select
+                  value={formData.category}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      category: event.target.value,
+                    })
+                  }
+                  className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none"
+                >
+                  <option value="hardware">Hardware</option>
+                  <option value="software">Software</option>
+                  <option value="network">Network</option>
+                  <option value="account">Account</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-sm font-semibold text-slate-700">
+                  Priority
+                </label>
+
+                <select
+                  value={formData.priority}
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      priority: event.target.value,
+                    })
+                  }
+                  className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none"
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                  <option value="critical">Critical</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex justify-end border-t border-slate-100 pt-6">
+              <button
+                type="submit"
+                className="rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+              >
+                Create Ticket
+              </button>
+            </div>
+          </div>
+        </form>
+      </main>
+    </div>
+  );
+}
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/tickets" element={<Tickets />} />
-      <Route path="/tickets/new" element={<h1>Create Ticket</h1>} />
+      <Route path="/tickets/new" element={<CreateTicket />} />
       <Route path="/tickets/:id" element={<TicketDetails />} />
     </Routes>
   );
